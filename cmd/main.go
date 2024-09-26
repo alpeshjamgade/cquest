@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "cquest/internal/app"
 
 func main() {
-	fmt.Println("starting service...")
+	app.Start()
 }
