@@ -7,6 +7,6 @@ import (
 
 type DB interface {
 	Connect(ctx context.Context) error
-	Disconnect(ctx context.Context) error
+	Disconnect() error
 	DB() *sqlx.DB
 }

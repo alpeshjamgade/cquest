@@ -3,11 +3,11 @@ package app
 import (
 	"context"
 	"cquest/config"
+	"cquest/internal/clients/db"
 	"cquest/internal/constants"
 	"cquest/internal/logger"
 	"cquest/internal/utils"
 	"fmt"
-	"github.com/gorilla/mux"
 	"net/http"
 	"os"
 	"os/signal"
@@ -25,14 +25,30 @@ func Start() {
 	ctx, stop := signal.NotifyContext(ctx, os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	log := logger.CreateLoggerWithCtx(ctx)
-	r := mux.NewRouter()
+	Logger := logger.CreateLoggerWithCtx(ctx)
+
+	r := GetRouter()
+	_ = getClients(ctx)
 
 	go func() {
-		log.Infof("Starting server on port %s", config.HttpPort)
+		Logger.Infof("Starting server on port %s", config.HttpPort)
 		http.ListenAndServe(fmt.Sprintf(":%s", config.HttpPort), r)
 	}()
 
 	<-ctx.Done()
-	log.Infof("Shutting down server...")
+	Logger.Infof("Shutting down server...")
+}
+
+func getClients(ctx context.Context) db.DB {
+	Logger := logger.CreateLoggerWithCtx(ctx)
+
+	db := db.NewPostgresDB(config.DbHost, config.DbPort, config.DbUsername, config.DbPassword, config.DbSSLMode, config.DbName)
+	err := db.Connect(ctx)
+
+	if err != nil {
+		Logger.Panic(err)
+		os.Exit(1)
+	}
+
+	return db
 }
