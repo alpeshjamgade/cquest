@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"cquest/config"
 	"fmt"
 	"github.com/gorilla/mux"
 	"log"
@@ -9,7 +10,10 @@ import (
 )
 
 func Start() {
+	config.LoadConf()
+
 	ctx := context.Background()
+
 	r := mux.NewRouter()
 	log.Printf("Starting server on port %s", "8080")
 	go func() {
