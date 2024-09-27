@@ -1,2 +1,5 @@
 core:
   http_port: 8080
+logger:
+  level: debug
+  encoding: console

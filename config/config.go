@@ -9,6 +9,10 @@ import (
 var (
 	// *core
 	HttpPort = "8080"
+
+	// *logger
+	LogLevel    = "info"
+	LogEncoding = "console"
 )
 
 func LoadConf() error {
@@ -31,6 +35,10 @@ func LoadConf() error {
 
 	// core
 	HttpPort = viper.GetString("core.http_port")
+
+	// logger
+	LogLevel = viper.GetString("logger.level")
+	LogEncoding = viper.GetString("logger.encoding")
 
 	return nil
 }

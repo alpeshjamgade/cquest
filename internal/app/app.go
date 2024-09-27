@@ -3,23 +3,36 @@ package app
 import (
 	"context"
 	"cquest/config"
+	"cquest/internal/constants"
+	"cquest/internal/logger"
+	"cquest/internal/utils"
 	"fmt"
 	"github.com/gorilla/mux"
-	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func Start() {
-	config.LoadConf()
+	err := config.LoadConf()
+	if err != nil {
+		fmt.Printf("Error loading config, %s", err)
+		os.Exit(1)
+	}
 
-	ctx := context.Background()
+	ctx := context.WithValue(context.Background(), constants.TraceID, utils.GetUUID())
+	ctx, stop := signal.NotifyContext(ctx, os.Interrupt, syscall.SIGTERM)
+	defer stop()
 
+	log := logger.CreateLoggerWithCtx(ctx)
 	r := mux.NewRouter()
-	log.Printf("Starting server on port %s", "8080")
+
 	go func() {
-		http.ListenAndServe(fmt.Sprintf(":%s", "8080"), r)
+		log.Infof("Starting server on port %s", config.HttpPort)
+		http.ListenAndServe(fmt.Sprintf(":%s", config.HttpPort), r)
 	}()
 
 	<-ctx.Done()
-	log.Println("Shutting down server...")
+	log.Infof("Shutting down server...")
 }
