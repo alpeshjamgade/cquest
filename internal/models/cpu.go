@@ -3,7 +3,7 @@ package models
 import "time"
 
 type CPU struct {
-	ID          string    `json:"id"`
+	ID          int       `json:"id"`
 	Model       string    `json:"model"`
 	Cores       int       `json:"cores"`
 	Threads     int       `json:"threads"`

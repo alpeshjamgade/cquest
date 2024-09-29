@@ -12,6 +12,10 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	handler "cquest/internal/handler/cpu"
+	repo "cquest/internal/repo/cpu"
+	service "cquest/internal/service/cpu"
 )
 
 func Start() {
@@ -28,7 +32,13 @@ func Start() {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 
 	r := GetRouter()
-	_ = getClients(ctx)
+
+	db := getClients(ctx)
+	cpuRepo := repo.NewCPURepo(db)
+	cpuService := service.NewCPUService(cpuRepo)
+	cpuHandler := handler.NewCPUHandler(cpuService)
+
+	cpuHandler.SetupRoutes(r)
 
 	go func() {
 		Logger.Infof("Starting server on port %s", config.HttpPort)

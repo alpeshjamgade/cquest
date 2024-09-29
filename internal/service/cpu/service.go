@@ -8,8 +8,8 @@ import (
 
 type ICPUService interface {
 	GetAllCPUs(ctx context.Context) ([]models.CPU, error)
-	AddCPU(ctx context.Context, cpu *models.CPU) error
-	UpdateCPU(ctx context.Context, cpu *models.CPU) error
+	AddCPU(ctx context.Context, cpu models.CPU) error
+	UpdateCPU(ctx context.Context, cpu models.CPU) error
 	DeleteCPUByID(ctx context.Context, id int) error
 	GetCPUByID(ctx context.Context, id int) (models.CPU, error)
 }
