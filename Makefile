@@ -1,6 +1,8 @@
 APP_BINARY=cquestApp
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/cquest?sslmode=disable"
-MIGRATION_PATH="./internal/migrations/"# Build binary
+MIGRATION_PATH="./internal/migrations/"
+
+# Build binary
 build:
 	@echo "Building app..."
 	CGO_ENABLED=0 go build -o _build/$(APP_BINARY) cmd/main.go
