@@ -27,9 +27,9 @@ func (repo *CPURepo) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
 	return cpus, nil
 }
 
-func (repo *CPURepo) AddCPU(ctx context.Context, cpu models.CPU) error {
+func (repo *CPURepo) AddCPU(ctx context.Context, cpu *models.CPU) error {
 	_, err := repo.db.DB().Exec(
-		`INSERT INTO cpu(Model, Cores, Threads, Cache, BaseClock, MaxClock, Rank, ReleaseDate) VALUES($1, $2, $3, $4, $5, $6, $7)`,
+		`INSERT INTO cpu(model, cores, threads, cache, base_clock, max_clock, rank, release_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
 		cpu.Model,
 		cpu.Cores,
 		cpu.Threads,
@@ -44,14 +44,14 @@ func (repo *CPURepo) AddCPU(ctx context.Context, cpu models.CPU) error {
 	return nil
 }
 
-func (repo *CPURepo) UpdateCPU(ctx context.Context, cpu models.CPU) error {
+func (repo *CPURepo) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	_, err := repo.db.DB().Exec(
-		`UPDATE cpu SET model=$1, cores=$2, thread=$3, cache=$3, base_clock=$4, max_clock=$5, rank=$6, release_date=$7 WHERE ID = $8`,
+		`UPDATE cpu SET model=$1, cores=$2, threads=$3, cache=$4, base_clock=$5, max_clock=$6, rank=$7, release_date=$8 WHERE ID = $9`,
 		cpu.Model,
 		cpu.Cores,
 		cpu.Threads,
-		cpu.Threads,
 		cpu.Cache,
+		cpu.BaseClock,
 		cpu.MaxClock,
 		cpu.Rank,
 		cpu.ReleaseDate,
@@ -77,11 +77,9 @@ func (repo *CPURepo) GetCPUByID(ctx context.Context, id int) (models.CPU, error)
 	if err != nil {
 		return cpu, err
 	}
-	for sqlRow.Next() {
-		err = sqlRow.StructScan(&cpu)
-		if err != nil {
-			return cpu, err
-		}
+	err = sqlRow.StructScan(&cpu)
+	if err != nil {
+		return cpu, err
 	}
 	return cpu, nil
 }

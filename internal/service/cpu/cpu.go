@@ -7,16 +7,15 @@ import (
 
 func (svc *CPUService) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
 	cpus, err := svc.repo.GetAllCPUs(ctx)
-	result := make([]models.CPU, len(cpus))
 
 	if err != nil {
 		return nil, err
 	}
 
-	return result, nil
+	return cpus, nil
 }
 
-func (svc *CPUService) AddCPU(ctx context.Context, cpu models.CPU) error {
+func (svc *CPUService) AddCPU(ctx context.Context, cpu *models.CPU) error {
 	err := svc.repo.AddCPU(ctx, cpu)
 	if err != nil {
 		return err
@@ -25,7 +24,7 @@ func (svc *CPUService) AddCPU(ctx context.Context, cpu models.CPU) error {
 	return nil
 }
 
-func (svc *CPUService) UpdateCPU(ctx context.Context, cpu models.CPU) error {
+func (svc *CPUService) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	err := svc.repo.UpdateCPU(ctx, cpu)
 	if err != nil {
 		return err
