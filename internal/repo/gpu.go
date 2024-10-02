@@ -1,4 +1,4 @@
-package gpu
+package repo
 
 import (
 	"context"
@@ -82,16 +82,12 @@ func (repo *GPURepo) DeleteGPUByID(ctx context.Context, id int) error {
 func (repo *GPURepo) GetGPUByID(ctx context.Context, id int) (models.GPU, error) {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	var gpu models.GPU
-	sqlRow, err := repo.db.DB().Queryx(
+	sqlRow := repo.db.DB().QueryRowx(
 		`SELECT * FROM gpu WHERE id=$1`,
 		id,
 	)
-	if err != nil {
-		Logger.Errorf("Error fetchinig GPU, %s", err)
-		return gpu, err
-	}
 
-	err = sqlRow.StructScan(&gpu)
+	err := sqlRow.StructScan(&gpu)
 	if err != nil {
 		Logger.Errorf("Error scanning fetched GPU record, %s", err)
 		return gpu, err

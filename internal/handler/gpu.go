@@ -1,4 +1,4 @@
-package gpu
+package handler
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 	"cquest/internal/models"
 	"cquest/internal/utils"
 	"net/http"
+	"strconv"
 )
 
 func (h *GPUHandler) GetAllGPUs(w http.ResponseWriter, r *http.Request) {
@@ -71,15 +72,17 @@ func (h *GPUHandler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
 
 func (h *GPUHandler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
-	req := models.GPU{}
-	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
-	err := utils.ReadJSON(w, r, &req)
+	queryParams := r.URL.Query()
+	idStr := queryParams.Get("id")
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
 	}
 
-	err = h.service.DeleteGPUByID(ctx, req.ID)
+	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
+
+	err = h.service.DeleteGPUByID(ctx, id)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
@@ -91,18 +94,18 @@ func (h *GPUHandler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *GPUHandler) GetGPUBuID(w http.ResponseWriter, r *http.Request) {
+func (h *GPUHandler) GetGPUByID(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
-	req := models.GPU{}
-	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
-
-	err := utils.ReadJSON(w, r, &req)
+	queryParams := r.URL.Query()
+	idStr := queryParams.Get("id")
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
 	}
 
-	gpu, err := h.service.GetGPUByID(ctx, req.ID)
+	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
+	gpu, err := h.service.GetGPUByID(ctx, id)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
