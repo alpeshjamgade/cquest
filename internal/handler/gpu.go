@@ -9,10 +9,10 @@ import (
 	"strconv"
 )
 
-func (h *GPUHandler) GetAllGPUs(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetAllGPUs(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	res := utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
-	gpus, err := h.service.GetAllGPUs(ctx)
+	gpus, err := h.Service.GetAllGPUs(ctx)
 	if err != nil {
 		res.Message = err.Error()
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
@@ -27,7 +27,7 @@ func (h *GPUHandler) GetAllGPUs(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (h *GPUHandler) AddGPU(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) AddGPU(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	req := &models.GPU{}
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
@@ -38,7 +38,7 @@ func (h *GPUHandler) AddGPU(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.AddGPU(ctx, req)
+	err = h.Service.AddGPU(ctx, req)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
@@ -49,7 +49,7 @@ func (h *GPUHandler) AddGPU(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (h *GPUHandler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	req := &models.GPU{}
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
@@ -59,7 +59,7 @@ func (h *GPUHandler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.UpdateGPU(ctx, req)
+	err = h.Service.UpdateGPU(ctx, req)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
@@ -70,7 +70,7 @@ func (h *GPUHandler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *GPUHandler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	queryParams := r.URL.Query()
 	idStr := queryParams.Get("id")
@@ -82,7 +82,7 @@ func (h *GPUHandler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
 
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
 
-	err = h.service.DeleteGPUByID(ctx, id)
+	err = h.Service.DeleteGPUByID(ctx, id)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
@@ -94,7 +94,7 @@ func (h *GPUHandler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *GPUHandler) GetGPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetGPUByID(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	queryParams := r.URL.Query()
 	idStr := queryParams.Get("id")
@@ -105,7 +105,7 @@ func (h *GPUHandler) GetGPUByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
-	gpu, err := h.service.GetGPUByID(ctx, id)
+	gpu, err := h.Service.GetGPUByID(ctx, id)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return

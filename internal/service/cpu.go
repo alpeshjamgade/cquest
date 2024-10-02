@@ -5,7 +5,7 @@ import (
 	"cquest/internal/models"
 )
 
-func (svc *CPUService) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
+func (svc *Service) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
 	cpus, err := svc.repo.GetAllCPUs(ctx)
 
 	if err != nil {
@@ -15,7 +15,7 @@ func (svc *CPUService) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
 	return cpus, nil
 }
 
-func (svc *CPUService) AddCPU(ctx context.Context, cpu *models.CPU) error {
+func (svc *Service) AddCPU(ctx context.Context, cpu *models.CPU) error {
 	err := svc.repo.AddCPU(ctx, cpu)
 	if err != nil {
 		return err
@@ -24,7 +24,7 @@ func (svc *CPUService) AddCPU(ctx context.Context, cpu *models.CPU) error {
 	return nil
 }
 
-func (svc *CPUService) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
+func (svc *Service) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	err := svc.repo.UpdateCPU(ctx, cpu)
 	if err != nil {
 		return err
@@ -32,7 +32,7 @@ func (svc *CPUService) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	return nil
 }
 
-func (svc *CPUService) DeleteCPUByID(ctx context.Context, id int) error {
+func (svc *Service) DeleteCPUByID(ctx context.Context, id int) error {
 	err := svc.repo.DeleteCPUByID(ctx, id)
 	if err != nil {
 		return err
@@ -40,7 +40,7 @@ func (svc *CPUService) DeleteCPUByID(ctx context.Context, id int) error {
 	return nil
 }
 
-func (svc *CPUService) GetCPUByID(ctx context.Context, id int) (models.CPU, error) {
+func (svc *Service) GetCPUByID(ctx context.Context, id int) (models.CPU, error) {
 	var cpu models.CPU
 	cpu, err := svc.repo.GetCPUByID(ctx, id)
 	if err != nil {

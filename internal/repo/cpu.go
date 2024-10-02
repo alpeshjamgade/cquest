@@ -6,7 +6,7 @@ import (
 	"cquest/internal/models"
 )
 
-func (repo *CPURepo) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
+func (repo *Repo) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	var cpus []models.CPU
 	sqlRow, err := repo.db.DB().Queryx(`SELECT * FROM cpu ORDER BY id DESC`)
@@ -27,7 +27,7 @@ func (repo *CPURepo) GetAllCPUs(ctx context.Context) ([]models.CPU, error) {
 	return cpus, nil
 }
 
-func (repo *CPURepo) AddCPU(ctx context.Context, cpu *models.CPU) error {
+func (repo *Repo) AddCPU(ctx context.Context, cpu *models.CPU) error {
 	_, err := repo.db.DB().Exec(
 		`INSERT INTO cpu(model, cores, threads, cache, base_clock, max_clock, rank, release_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
 		cpu.Model,
@@ -44,7 +44,7 @@ func (repo *CPURepo) AddCPU(ctx context.Context, cpu *models.CPU) error {
 	return nil
 }
 
-func (repo *CPURepo) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
+func (repo *Repo) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	_, err := repo.db.DB().Exec(
 		`UPDATE cpu SET model=$1, cores=$2, threads=$3, cache=$4, base_clock=$5, max_clock=$6, rank=$7, release_date=$8 WHERE ID = $9`,
 		cpu.Model,
@@ -63,7 +63,7 @@ func (repo *CPURepo) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	return nil
 }
 
-func (repo *CPURepo) DeleteCPUByID(ctx context.Context, id int) error {
+func (repo *Repo) DeleteCPUByID(ctx context.Context, id int) error {
 	_, err := repo.db.DB().Exec(`DELETE FROM cpu WHERE ID = $1`, id)
 	if err != nil {
 		return err
@@ -71,7 +71,7 @@ func (repo *CPURepo) DeleteCPUByID(ctx context.Context, id int) error {
 	return nil
 }
 
-func (repo *CPURepo) GetCPUByID(ctx context.Context, id int) (models.CPU, error) {
+func (repo *Repo) GetCPUByID(ctx context.Context, id int) (models.CPU, error) {
 	var cpu models.CPU
 	sqlRow, err := repo.db.DB().Queryx(`SELECT * FROM cpu WHERE ID = $1`, id)
 	if err != nil {

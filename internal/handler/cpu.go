@@ -10,10 +10,10 @@ import (
 	"strconv"
 )
 
-func (h *CPUHandler) GetAllCPUs(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetAllCPUs(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	Logger := logger.CreateLoggerWithCtx(ctx)
-	result, err := h.service.GetAllCPUs(ctx)
+	result, err := h.Service.GetAllCPUs(ctx)
 	if err != nil {
 		Logger.Errorw("error while getting all cpus", "error", err)
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
@@ -25,7 +25,7 @@ func (h *CPUHandler) GetAllCPUs(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *CPUHandler) AddCPU(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) AddCPU(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	Logger := logger.CreateLoggerWithCtx(ctx)
 
@@ -41,7 +41,7 @@ func (h *CPUHandler) AddCPU(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.AddCPU(ctx, req)
+	err = h.Service.AddCPU(ctx, req)
 	if err != nil {
 		res.Status = "error"
 		res.Message = err.Error()
@@ -55,7 +55,7 @@ func (h *CPUHandler) AddCPU(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *CPUHandler) UpdateCPU(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) UpdateCPU(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	req := &models.CPU{}
@@ -68,7 +68,7 @@ func (h *CPUHandler) UpdateCPU(w http.ResponseWriter, r *http.Request) {
 		utils.WriteJSON(w, http.StatusBadRequest, res)
 		return
 	}
-	err = h.service.UpdateCPU(ctx, req)
+	err = h.Service.UpdateCPU(ctx, req)
 	if err != nil {
 		res.Status = "error"
 		res.Message = err.Error()
@@ -81,7 +81,7 @@ func (h *CPUHandler) UpdateCPU(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *CPUHandler) DeleteCPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) DeleteCPUByID(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	res := utils.HTTPResponse{Data: map[string]string{}, Status: "success", Message: ""}
 	queryParams := r.URL.Query()
@@ -94,7 +94,7 @@ func (h *CPUHandler) DeleteCPUByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.DeleteCPUByID(ctx, id)
+	err = h.Service.DeleteCPUByID(ctx, id)
 	if err != nil {
 		res.Status = "error"
 		res.Message = err.Error()
@@ -108,7 +108,7 @@ func (h *CPUHandler) DeleteCPUByID(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *CPUHandler) GetCPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetCPUByID(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	res := utils.HTTPResponse{Data: map[string]string{}, Status: "success", Message: ""}
 
@@ -121,7 +121,7 @@ func (h *CPUHandler) GetCPUByID(w http.ResponseWriter, r *http.Request) {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
 	}
-	cpu, err := h.service.GetCPUByID(ctx, id)
+	cpu, err := h.Service.GetCPUByID(ctx, id)
 	if err != nil {
 		res.Status = "error"
 		res.Message = err.Error()

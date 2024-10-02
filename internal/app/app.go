@@ -33,15 +33,10 @@ func Start() {
 	r := GetRouter()
 
 	db := getClients(ctx)
-	cpuRepo := repo.NewCPURepo(db)
-	cpuService := service.NewCPUService(cpuRepo)
-	cpuHandler := handler.NewCPUHandler(cpuService)
-	cpuHandler.SetupRoutes(r)
-
-	gpuRepo := repo.NewGPURepo(db)
-	gpuService := service.NewGPUService(gpuRepo)
-	gpuHandler := handler.NewGPUHandler(gpuService)
-	gpuHandler.SetupRoutes(r)
+	Repo := repo.NewRepo(db)
+	Service := service.NewService(Repo)
+	Handler := handler.NewHandler(Service)
+	Handler.SetupRoutes(r)
 
 	go func() {
 		Logger.Infof("Starting server on port %s", config.HttpPort)
