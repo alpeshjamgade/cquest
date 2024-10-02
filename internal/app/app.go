@@ -30,13 +30,13 @@ func Start() {
 
 	Logger := logger.CreateLoggerWithCtx(ctx)
 
-	r := GetRouter()
+	router := GetRouter()
+	DB := getClients(ctx)
 
-	db := getClients(ctx)
-	Repo := repo.NewRepo(db)
+	Repo := repo.NewRepo(DB)
 	Service := service.NewService(Repo)
 	Handler := handler.NewHandler(Service)
-	Handler.SetupRoutes(r)
+	Handler.SetupRoutes(router)
 
 	go func() {
 		Logger.Infof("Starting server on port %s", config.HttpPort)
