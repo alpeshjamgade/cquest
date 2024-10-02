@@ -37,7 +37,11 @@ func (h *GPUHandler) AddGPU(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.service.AddGPU(ctx, req)
+	err = h.service.AddGPU(ctx, req)
+	if err != nil {
+		utils.ErrorJSON(w, err, http.StatusBadRequest)
+		return
+	}
 	res.Status = "success"
 	utils.WriteJSON(w, http.StatusOK, res)
 	return
@@ -55,6 +59,11 @@ func (h *GPUHandler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = h.service.UpdateGPU(ctx, req)
+	if err != nil {
+		utils.ErrorJSON(w, err, http.StatusBadRequest)
+		return
+	}
+
 	res.Status = "success"
 	utils.WriteJSON(w, http.StatusOK, res)
 	return
