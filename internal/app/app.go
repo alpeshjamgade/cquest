@@ -30,17 +30,17 @@ func Start() {
 
 	Logger := logger.CreateLoggerWithCtx(ctx)
 
-	router := GetRouter()
+	Router := GetRouter()
 	DB := getClients(ctx)
 
 	Repo := repo.NewRepo(DB)
 	Service := service.NewService(Repo)
 	Handler := handler.NewHandler(Service)
-	Handler.SetupRoutes(router)
+	Handler.SetupRoutes(Router)
 
 	go func() {
 		Logger.Infof("Starting server on port %s", config.HttpPort)
-		http.ListenAndServe(fmt.Sprintf(":%s", config.HttpPort), r)
+		http.ListenAndServe(fmt.Sprintf(":%s", config.HttpPort), Router)
 	}()
 
 	<-ctx.Done()
