@@ -11,7 +11,7 @@ type GPUHandler struct {
 	service gpu.IGPUService
 }
 
-func NewGPUHadler(service gpu.IGPUService) *GPUHandler {
+func NewGPUHandler(service gpu.IGPUService) *GPUHandler {
 	return &GPUHandler{service: service}
 }
 

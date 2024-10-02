@@ -29,7 +29,7 @@ func (repo *GPURepo) GetAllGPUs(ctx context.Context) ([]models.GPU, error) {
 	return gpus, nil
 }
 
-func (repo *GPURepo) AddGPU(ctx context.Context, gpu models.GPU) error {
+func (repo *GPURepo) AddGPU(ctx context.Context, gpu *models.GPU) error {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	_, err := repo.db.DB().Queryx(
 		`INSERT INTO gpu(model, memory, clock_speed, memory_type, tdp, architecture, rank, release_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
@@ -43,7 +43,7 @@ func (repo *GPURepo) AddGPU(ctx context.Context, gpu models.GPU) error {
 	return nil
 }
 
-func (repo *GPURepo) UpdateGPU(ctx context.Context, gpu models.GPU) error {
+func (repo *GPURepo) UpdateGPU(ctx context.Context, gpu *models.GPU) error {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	_, err := repo.db.DB().Queryx(
 		`UPDATE gpu SET model=$1, memory=$2, clock_speed=$3, memory_type=$4, tdp=$5, architecture=$6, rank=$7, release_date=$8 WHERE id=$9`,

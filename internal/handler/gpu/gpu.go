@@ -28,10 +28,10 @@ func (h *GPUHandler) GetAllGPUs(w http.ResponseWriter, r *http.Request) {
 
 func (h *GPUHandler) AddGPU(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
-	req := models.GPU{}
+	req := &models.GPU{}
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
 
-	err := utils.ReadJSON(w, r, &req)
+	err := utils.ReadJSON(w, r, req)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
@@ -46,9 +46,9 @@ func (h *GPUHandler) AddGPU(w http.ResponseWriter, r *http.Request) {
 
 func (h *GPUHandler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
-	req := models.GPU{}
+	req := &models.GPU{}
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
-	err := utils.ReadJSON(w, r, &req)
+	err := utils.ReadJSON(w, r, req)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return

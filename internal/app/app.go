@@ -13,9 +13,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	handler "cquest/internal/handler/cpu"
-	repo "cquest/internal/repo/cpu"
-	service "cquest/internal/service/cpu"
+	cpuHandler "cquest/internal/handler/cpu"
+	cpuRepo "cquest/internal/repo/cpu"
+	cpuService "cquest/internal/service/cpu"
+
+	gpuHandler "cquest/internal/handler/gpu"
+	gpuRepo "cquest/internal/repo/gpu"
+	gpuService "cquest/internal/service/gpu"
 )
 
 func Start() {
@@ -34,11 +38,15 @@ func Start() {
 	r := GetRouter()
 
 	db := getClients(ctx)
-	cpuRepo := repo.NewCPURepo(db)
-	cpuService := service.NewCPUService(cpuRepo)
-	cpuHandler := handler.NewCPUHandler(cpuService)
-
+	cpuRepo := cpuRepo.NewCPURepo(db)
+	cpuService := cpuService.NewCPUService(cpuRepo)
+	cpuHandler := cpuHandler.NewCPUHandler(cpuService)
 	cpuHandler.SetupRoutes(r)
+
+	gpuRepo := gpuRepo.NewGPURepo(db)
+	gpuService := gpuService.NewGPUService(gpuRepo)
+	gpuHandler := gpuHandler.NewGPUHandler(gpuService)
+	gpuHandler.SetupRoutes(r)
 
 	go func() {
 		Logger.Infof("Starting server on port %s", config.HttpPort)

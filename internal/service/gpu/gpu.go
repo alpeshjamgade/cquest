@@ -14,7 +14,7 @@ func (svc GPUService) GetAllGPUs(ctx context.Context) ([]models.GPU, error) {
 	return gpus, nil
 }
 
-func (svc GPUService) AddGPU(ctx context.Context, gpu models.GPU) error {
+func (svc GPUService) AddGPU(ctx context.Context, gpu *models.GPU) error {
 	err := svc.repo.AddGPU(ctx, gpu)
 	if err != nil {
 		return err
@@ -23,7 +23,7 @@ func (svc GPUService) AddGPU(ctx context.Context, gpu models.GPU) error {
 	return nil
 }
 
-func (svc GPUService) UpdateGPU(ctx context.Context, gpu models.GPU) error {
+func (svc GPUService) UpdateGPU(ctx context.Context, gpu *models.GPU) error {
 	err := svc.repo.UpdateGPU(ctx, gpu)
 	if err != nil {
 		return err
@@ -32,8 +32,8 @@ func (svc GPUService) UpdateGPU(ctx context.Context, gpu models.GPU) error {
 	return nil
 }
 
-func (svc GPUService) DeleteGPU(ctx context.Context, id int) error {
-	err := svc.repo.DeleteGPU(ctx, id)
+func (svc GPUService) DeleteGPUByID(ctx context.Context, id int) error {
+	err := svc.repo.DeleteGPUByID(ctx, id)
 	if err != nil {
 		return err
 	}
