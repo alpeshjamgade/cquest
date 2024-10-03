@@ -70,7 +70,7 @@ func (h *Handler) UpdateGPU(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *Handler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) DeleteGPUById(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	queryParams := r.URL.Query()
 	idStr := queryParams.Get("id")
@@ -82,7 +82,7 @@ func (h *Handler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
 
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
 
-	err = h.Service.DeleteGPUByID(ctx, id)
+	err = h.Service.DeleteGPUById(ctx, id)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
@@ -94,7 +94,7 @@ func (h *Handler) DeleteGPUByID(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *Handler) GetGPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetGPUById(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	queryParams := r.URL.Query()
 	idStr := queryParams.Get("id")
@@ -105,7 +105,7 @@ func (h *Handler) GetGPUByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res := &utils.HTTPResponse{Data: map[string]string{}, Message: "", Status: "error"}
-	gpu, err := h.Service.GetGPUByID(ctx, id)
+	gpu, err := h.Service.GetGPUById(ctx, id)
 	if err != nil {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return

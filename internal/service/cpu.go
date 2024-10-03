@@ -32,17 +32,17 @@ func (svc *Service) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	return nil
 }
 
-func (svc *Service) DeleteCPUByID(ctx context.Context, id int) error {
-	err := svc.repo.DeleteCPUByID(ctx, id)
+func (svc *Service) DeleteCPUById(ctx context.Context, id int) error {
+	err := svc.repo.DeleteCPUById(ctx, id)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (svc *Service) GetCPUByID(ctx context.Context, id int) (models.CPU, error) {
+func (svc *Service) GetCPUById(ctx context.Context, id int) (models.CPU, error) {
 	var cpu models.CPU
-	cpu, err := svc.repo.GetCPUByID(ctx, id)
+	cpu, err := svc.repo.GetCPUById(ctx, id)
 	if err != nil {
 		return cpu, err
 	}

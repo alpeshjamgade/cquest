@@ -81,7 +81,7 @@ func (h *Handler) UpdateCPU(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *Handler) DeleteCPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) DeleteCPUById(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	res := utils.HTTPResponse{Data: map[string]string{}, Status: "success", Message: ""}
 	queryParams := r.URL.Query()
@@ -94,7 +94,7 @@ func (h *Handler) DeleteCPUByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.Service.DeleteCPUByID(ctx, id)
+	err = h.Service.DeleteCPUById(ctx, id)
 	if err != nil {
 		res.Status = "error"
 		res.Message = err.Error()
@@ -108,7 +108,7 @@ func (h *Handler) DeleteCPUByID(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *Handler) GetCPUByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetCPUById(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), constants.TraceID, utils.GetUUID())
 	res := utils.HTTPResponse{Data: map[string]string{}, Status: "success", Message: ""}
 
@@ -121,7 +121,7 @@ func (h *Handler) GetCPUByID(w http.ResponseWriter, r *http.Request) {
 		utils.ErrorJSON(w, err, http.StatusBadRequest)
 		return
 	}
-	cpu, err := h.Service.GetCPUByID(ctx, id)
+	cpu, err := h.Service.GetCPUById(ctx, id)
 	if err != nil {
 		res.Status = "error"
 		res.Message = err.Error()

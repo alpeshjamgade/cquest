@@ -63,7 +63,7 @@ func (repo *Repo) UpdateCPU(ctx context.Context, cpu *models.CPU) error {
 	return nil
 }
 
-func (repo *Repo) DeleteCPUByID(ctx context.Context, id int) error {
+func (repo *Repo) DeleteCPUById(ctx context.Context, id int) error {
 	_, err := repo.db.DB().Exec(`DELETE FROM cpu WHERE ID = $1`, id)
 	if err != nil {
 		return err
@@ -71,7 +71,7 @@ func (repo *Repo) DeleteCPUByID(ctx context.Context, id int) error {
 	return nil
 }
 
-func (repo *Repo) GetCPUByID(ctx context.Context, id int) (models.CPU, error) {
+func (repo *Repo) GetCPUById(ctx context.Context, id int) (models.CPU, error) {
 	var cpu models.CPU
 	sqlRow, err := repo.db.DB().Queryx(`SELECT * FROM cpu WHERE ID = $1`, id)
 	if err != nil {

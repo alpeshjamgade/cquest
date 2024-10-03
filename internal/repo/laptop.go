@@ -87,7 +87,7 @@ func (repo *Repo) UpdateLaptop(ctx context.Context, laptop *models.Laptop) error
 	return nil
 }
 
-func (repo *Repo) DeleteLaptopByID(ctx context.Context, id int) error {
+func (repo *Repo) DeleteLaptopById(ctx context.Context, id int) error {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	_, err := repo.db.DB().Exec(
 		`DELETE FROM laptop WHERE id=$1`,
@@ -102,7 +102,7 @@ func (repo *Repo) DeleteLaptopByID(ctx context.Context, id int) error {
 	return nil
 }
 
-func (repo *Repo) GetLaptopByID(ctx context.Context, id int) (models.Laptop, error) {
+func (repo *Repo) GetLaptopById(ctx context.Context, id int) (models.Laptop, error) {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	var laptop models.Laptop
 	sqlRow := repo.db.DB().QueryRowx(

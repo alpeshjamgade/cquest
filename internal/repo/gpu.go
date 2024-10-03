@@ -64,7 +64,7 @@ func (repo *Repo) UpdateGPU(ctx context.Context, gpu *models.GPU) error {
 	return nil
 }
 
-func (repo *Repo) DeleteGPUByID(ctx context.Context, id int) error {
+func (repo *Repo) DeleteGPUById(ctx context.Context, id int) error {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	_, err := repo.db.DB().Exec(
 		`DELETE FROM gpu WHERE id=$1`,
@@ -79,7 +79,7 @@ func (repo *Repo) DeleteGPUByID(ctx context.Context, id int) error {
 	return nil
 }
 
-func (repo *Repo) GetGPUByID(ctx context.Context, id int) (models.GPU, error) {
+func (repo *Repo) GetGPUById(ctx context.Context, id int) (models.GPU, error) {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	var gpu models.GPU
 	sqlRow := repo.db.DB().QueryRowx(
