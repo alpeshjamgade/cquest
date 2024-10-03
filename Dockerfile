@@ -4,7 +4,7 @@ RUN mkdir /app
 COPY . /app
 RUN ls
 WORKDIR /app
-RUN CGO_ENABLED=0 go build -o appBinary ./cmd/main.go
+RUN CGO_ENABLED=0 go build -o cquestApp ./cmd/main.go
 RUN chmod +x cquestApp
 
 FROM alpine:latest
