@@ -6,8 +6,8 @@ type Laptop struct {
 	Id            int       `json:"id" db:"id"`
 	Brand         string    `json:"brand" db:"brand"`
 	Model         string    `json:"model" db:"model"`
-	Processor     CPU       `json:"processor" db:"processor"`
-	GPU           GPU       `json:"gpu" db:"gpu"`
+	CPUId         int       `json:"cpu_id" db:"cpu_id"`
+	GPUId         int       `json:"gpu_id" db:"gpu_id"`
 	RAM           int       `json:"ram" db:"ram"`
 	SSD           int       `json:"ssd" db:"ssd"`
 	HDD           int       `json:"hdd" db:"hdd"`
