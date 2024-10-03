@@ -27,8 +27,8 @@ type IRepo interface {
 	UpdateLaptop(ctx context.Context, gpu *models.Laptop) error
 	DeleteLaptopByID(ctx context.Context, id int) error
 	GetLaptopByID(ctx context.Context, id int) (models.Laptop, error)
-	GetLaptopsByCPUID(ctx context.Context, cpu_id int) ([]models.Laptop, error)
-	GetLaptopsByGPUID(ctx context.Context, gpu_id int) ([]models.Laptop, error)
+	//GetLaptopsByCPUID(ctx context.Context, cpu_id int) ([]models.Laptop, error)
+	//GetLaptopsByGPUID(ctx context.Context, gpu_id int) ([]models.Laptop, error)
 }
 
 type Repo struct {
