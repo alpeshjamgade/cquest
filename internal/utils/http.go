@@ -21,7 +21,7 @@ type HTTPError struct {
 type JsonResponse struct {
 	Error   bool   `json:"error"`
 	Message string `json:"message"`
-	Data    any    `json:"data,omitempty"`
+	Data    any    `json:"data"`
 }
 
 func ReadJSON(w http.ResponseWriter, r *http.Request, data any) error {

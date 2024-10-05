@@ -4,6 +4,8 @@ import (
 	"context"
 	"cquest/internal/logger"
 	"cquest/internal/models"
+	"database/sql"
+	"errors"
 )
 
 func (repo *Repo) GetAllLaptops(ctx context.Context) ([]models.Laptop, error) {
@@ -112,6 +114,9 @@ func (repo *Repo) GetLaptopById(ctx context.Context, id int) (models.Laptop, err
 
 	err := sqlRow.StructScan(&laptop)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return laptop, errors.New("laptop not found")
+		}
 		Logger.Errorf("Error scanning fetched Laptop record, %s", err)
 		return laptop, err
 	}

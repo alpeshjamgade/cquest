@@ -40,7 +40,7 @@ func (svc *Service) DeleteLaptopById(ctx context.Context, id int) error {
 }
 
 func (svc *Service) GetLaptopById(ctx context.Context, id int) (models.Laptop, error) {
-	laptop, err := svc.GetLaptopById(ctx, id)
+	laptop, err := svc.repo.GetLaptopById(ctx, id)
 	if err != nil {
 		return laptop, err
 	}
