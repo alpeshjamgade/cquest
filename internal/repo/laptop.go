@@ -34,7 +34,10 @@ func (repo *Repo) GetAllLaptops(ctx context.Context) ([]models.Laptop, error) {
 func (repo *Repo) AddLaptop(ctx context.Context, laptop *models.Laptop) error {
 	Logger := logger.CreateLoggerWithCtx(ctx)
 	_, err := repo.db.DB().Exec(
-		`INSERT INTO laptop(brand, model, cpu_id, gpu_id, ram, ssd, hdd, usb_c, usb_a, hdmi, ethernet, headphone_jack, weight, price, rank, release_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
+		`INSERT INTO laptop(
+                brand, model, cpu_id, gpu_id, ram, ssd, hdd, usb_c, usb_a, hdmi, ethernet,
+                headphone_jack, weight, price, rank, release_date)
+				VALUES($1,	 $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
 		laptop.Brand,
 		laptop.Model,
 		laptop.CPUId,
